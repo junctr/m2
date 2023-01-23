@@ -4,7 +4,7 @@
 # D
 # no wn
 # no sign
-# beta zeta D stop
+# no beta zeta D stop
 
 from func_d import *
 import numpy as np
@@ -34,7 +34,7 @@ def main(n_seed: int):
     alpha_b = 20 * np.identity(75)
     alpha_beta = 0.001 * np.identity(5)
     alpha_zeta = 0.1
-    alpha_lambda = 0.3
+    alpha_lambda = 0.0
     alpha_d = 10 * np.identity(3)
     alpha_dk = 0.2 * np.identity(3)
     alpha_wn0 = 100
@@ -161,6 +161,7 @@ def main(n_seed: int):
     e_31 = []
     e_32 = []
     e_33 = []
+    e_34 = []
 
     t_data = []
 
@@ -188,42 +189,42 @@ def main(n_seed: int):
         ak = ak_f(mu,muji,A,Aold,B,v,a,b,xold[-1])
         bk = bk_f(mu,muji,A,Aold,B,v,a,b)
 
-        if zeta > 0.1:
+        # if zeta > 0.1:
 
-            k_beta = np.linalg.norm(s) * alpha_beta @ omega
-            k_zeta = -alpha_zeta * zeta
-            if taud[0] > 0:
+        #     k_beta = np.linalg.norm(s) * alpha_beta @ omega
+        #     k_zeta = -alpha_zeta * zeta
+        #     if taud[0] > 0:
                 
-                k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        #         k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
-            elif taud[0] < 0:
+        #     elif taud[0] < 0:
 
-                k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        #         k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
         
-            else :
+        #     else :
 
-                k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        #         k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
-        else :
-
-            k_beta = 0.0
-            k_zeta = 0.0
-            k_D = np.zeros((3,3))
-
-        # k_beta = np.linalg.norm(s) * alpha_beta @ omega
-        # k_zeta = -alpha_zeta * zeta
-        
-        # if taud[0] > 0:
-            
-        #     k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
-
-        # elif taud[0] < 0:
-            
-        #     k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
-        
         # else :
+
+        #     k_beta = 0.0
+        #     k_zeta = 0.0
+        #     k_D = np.zeros((3,3))
+
+        k_beta = np.linalg.norm(s) * alpha_beta @ omega
+        k_zeta = -alpha_zeta * zeta
+        
+        if taud[0] > 0:
             
-        #     k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+            k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+
+        elif taud[0] < 0:
+            
+            k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        
+        else :
+            
+            k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
         dwn = dwn_f(wn)
 
@@ -278,6 +279,7 @@ def main(n_seed: int):
                 e_31.append(D[1][1])
                 e_32.append(D[2][2])
                 e_33.append(beta.T @ omega)
+                e_34.append(np.linalg.norm(e[:,0:1]))
 
                 t_data.append(t)
 
@@ -334,6 +336,7 @@ def main(n_seed: int):
         e_31,
         e_32,
         e_33,
+        e_34,
     ]
 
     param_all = [v,a,b,W,D,beta,zeta]
@@ -358,11 +361,11 @@ def main(n_seed: int):
     # # print("n_data")
     # # print(len(t_data))
 
-    dir_base = "data_test_old_d/"
+    dir_base = "./data/no/"
     os.makedirs(dir_base, exist_ok=True)
-    np.save(dir_base + f"p_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_param_all.npy",param_all)
+    np.save(dir_base + f"s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_param_all.npy",param_all)
     # #np.save(f"k_s{n_seed}_m{alpha_lambda}_T{T}_t{end}_param_all_old.npy",param_all_old)
-    np.savetxt(dir_base + f"p_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv",e_all,delimiter = ",")
+    np.savetxt(dir_base + f"s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv",e_all,delimiter = ",")
 
     # print(f"END n_seed={n_seed}")
 

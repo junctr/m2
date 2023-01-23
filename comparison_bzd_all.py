@@ -38,12 +38,12 @@ end = 100
 end_plt = 100
 start_plt = 0
 
-n_e = 3
+dir_base = "data_test_old_d/"
 
-t_data = np.loadtxt(f"data/step{step}_t{end}.csv")
+t_data = np.loadtxt(dir_base + f"step{step}_t{end}.csv")
 
-e_all_p = np.loadtxt(f"p_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_0s0}_{alpha_0s1}_{alpha_0s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
-e_all_c = np.loadtxt(f"c_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_1s0}_{alpha_1s1}_{alpha_1s2}_T{T}_step{step}_t{end}_e_all.csv")
+e_all_p = np.loadtxt(dir_base + f"p_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_0s0}_{alpha_0s1}_{alpha_0s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
+e_all_c = np.loadtxt(dir_base + f"c_bzd_s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_1s0}_{alpha_1s1}_{alpha_1s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
 
 fig, axes = plt.subplots(nrows=11, ncols=3, sharex=False)
 
