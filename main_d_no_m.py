@@ -20,7 +20,7 @@ from numba import njit
 
 def main(n_seed: int):
     
-    # np.random.seed(0)
+    np.random.seed(n_seed)
     # # print(f"START n_seed={n_seed}")
     
     t = 0.0

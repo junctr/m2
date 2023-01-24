@@ -18,7 +18,7 @@ e_30.append(D[0][0])
 
 e_33.append(beta.T @ omega)
 """
-n_seed = 50
+n_seed = 30
 alpha_lambda = 0.0
 alpha_wn0 = 100
 alpha_wn1 = 10
