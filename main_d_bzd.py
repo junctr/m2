@@ -15,11 +15,12 @@ from tqdm import tqdm
 import csv
 from multiprocessing import Pool, cpu_count
 import os
+import datetime
 from numba import njit
 
 def main(n_seed: int):
     
-    np.random.seed(0)
+    # np.random.seed(0)
     # # print(f"START n_seed={n_seed}")
     
     t = 0.0
@@ -34,7 +35,7 @@ def main(n_seed: int):
     alpha_b = 20 * np.identity(75)
     alpha_beta = 0.001 * np.identity(5)
     alpha_zeta = 0.1
-    alpha_lambda = 0.5
+    alpha_lambda = 0.0
     alpha_d = 10 * np.identity(3)
     alpha_dk = 0.2 * np.identity(3)
     alpha_wn0 = 100
@@ -373,7 +374,11 @@ if __name__ == '__main__':
     
     start = time.perf_counter()
     
-    print(cpu_count())
+    print(datetime.datetime.now())
+    
+    use_cpu = 5
+    
+    print(f"use cpu core {use_cpu}/{cpu_count()}")
 
     init = []
 
@@ -381,7 +386,7 @@ if __name__ == '__main__':
         
         init.append((i,))
 
-    with Pool(cpu_count()) as p:
+    with Pool(use_cpu) as p:
         
         r = p.starmap(func=main,iterable=init)
         

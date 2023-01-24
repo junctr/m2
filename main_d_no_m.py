@@ -35,7 +35,7 @@ def main(n_seed: int):
     alpha_b = 20 * np.identity(75)
     alpha_beta = 0.001 * np.identity(5)
     alpha_zeta = 0.1
-    alpha_lambda = 0.0
+    alpha_lambda = 0.3
     alpha_d = 10 * np.identity(3)
     alpha_dk = 0.2 * np.identity(3)
     alpha_wn0 = 100
