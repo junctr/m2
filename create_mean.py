@@ -20,8 +20,9 @@ e_30.append(D[0][0])
 
 e_33.append(beta.T @ omega)
 """
-# n_seed = 0
+
 alpha_lambda = 0.0
+
 alpha_wn0 = 100
 alpha_wn1 = 10
 
@@ -36,7 +37,7 @@ end = 100
 end_plt = 100
 start_plt = 0
 
-dir_base = "./data/bzd/"
+dir_base = "./data/bzd1/"
 
 # t_data = np.loadtxt(dir_base + f"step{step}_t{end}.csv")
 
@@ -51,10 +52,10 @@ e2 = np.zeros((n,100000))
 
 norm = np.zeros((n,100000))
 
-for i in range(n):
+for i in tqdm(range(n)):
     
     # e_all_p = np.loadtxt(dir_base + f"p_bzd_s{i}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_0s0}_{alpha_0s1}_{alpha_0s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
-    e_all_p = np.loadtxt(dir_base + f"/bz/p_s{i}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv")
+    e_all_p = np.loadtxt(dir_base + f"s{i}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
     
     e0[i] = e_all_p[0]
     e1[i] = e_all_p[1]
@@ -86,4 +87,4 @@ e_mean = [e0_mean,e1_mean,e2_mean,e0_abs_mean,e1_abs_mean,e2_abs_mean,norm_mean]
 os.makedirs(dir_base, exist_ok=True)
 
 # np.savetxt(dir_base + f"m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv",e_mean,delimiter = ",")
-np.savetxt(dir_base + f"m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_norm.csv",e_mean,delimiter = ",")
+np.savetxt(dir_base + f"m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_mean.csv",e_mean,delimiter = ",")

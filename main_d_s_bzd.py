@@ -4,9 +4,9 @@
 # D
 # no wn
 # no sign
-# no beta zeta D stop
-
-from func_d import *
+# beta zeta D stop
+# new s
+from func_d_s import *
 import numpy as np
 import time
 #import scipy.integrate as sp
@@ -35,7 +35,7 @@ def main(n_seed: int):
     alpha_b = 20 * np.identity(75)
     alpha_beta = 0.001 * np.identity(5)
     alpha_zeta = 0.1
-    alpha_lambda = 0.5
+    alpha_lambda = 0.0
     alpha_d = 10 * np.identity(3)
     alpha_dk = 0.2 * np.identity(3)
     alpha_wn0 = 100
@@ -43,6 +43,11 @@ def main(n_seed: int):
     alpha_s0 = 5.0
     alpha_s1 = 5.0
     alpha_s2 = 5.0
+    alpha_sa1 = 1.0
+    alpha_sb1 = 1.0
+    alpha_sm1 = 9/5
+    alpha_sm2 = 5/9
+
 
     T = 1000
 
@@ -172,7 +177,7 @@ def main(n_seed: int):
 
         qd = qd_f(t)
         e = e_f(t,q)
-        s = s_f(e)
+        s = s_f(e,alpha_sa1,alpha_sb1,alpha_sm1,alpha_sm2)
         x = x_f(q,qd,s)
         xji = xji_f(x,xold[-T],v,a,b)
         A = A_f(xji,a,b)
@@ -190,42 +195,42 @@ def main(n_seed: int):
         ak = ak_f(mu,muji,A,Aold,B,v,a,b,xold[-1])
         bk = bk_f(mu,muji,A,Aold,B,v,a,b)
 
-        # if zeta > 0.1:
+        if zeta > 0.1:
 
-        #     k_beta = np.linalg.norm(s) * alpha_beta @ omega
-        #     k_zeta = -alpha_zeta * zeta
-        #     if taud[0] > 0:
+            k_beta = np.linalg.norm(s) * alpha_beta @ omega
+            k_zeta = -alpha_zeta * zeta
+            if taud[0] > 0:
                 
-        #         k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+                k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
-        #     elif taud[0] < 0:
+            elif taud[0] < 0:
 
-        #         k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+                k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
         
-        #     else :
+            else :
 
-        #         k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+                k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
-        # else :
-
-        #     k_beta = 0.0
-        #     k_zeta = 0.0
-        #     k_D = np.zeros((3,3))
-
-        k_beta = np.linalg.norm(s) * alpha_beta @ omega
-        k_zeta = -alpha_zeta * zeta
-        
-        if taud[0] > 0:
-            
-            k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
-
-        elif taud[0] < 0:
-            
-            k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
-        
         else :
+
+            k_beta = 0.0
+            k_zeta = 0.0
+            k_D = np.zeros((3,3))
+
+        # k_beta = np.linalg.norm(s) * alpha_beta @ omega
+        # k_zeta = -alpha_zeta * zeta
+        
+        # if taud[0] > 0:
             
-            k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        #     k_D = alpha_d @ np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+
+        # elif taud[0] < 0:
+            
+        #     k_D = alpha_d @ -np.ones((3,1)) @ s.T - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
+        
+        # else :
+            
+        #     k_D = - alpha_d @ alpha_dk @ D * np.linalg.norm(s)
 
         dwn = dwn_f(wn)
 
@@ -362,7 +367,7 @@ def main(n_seed: int):
     # # print("n_data")
     # # print(len(t_data))
 
-    dir_base = "./data/no/"
+    dir_base = "./data/s_bzd/"
     os.makedirs(dir_base, exist_ok=True)
     np.save(dir_base + f"s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_param_all.npy",param_all)
     # #np.save(f"k_s{n_seed}_m{alpha_lambda}_T{T}_t{end}_param_all_old.npy",param_all_old)
@@ -376,7 +381,7 @@ if __name__ == '__main__':
     
     print(datetime.datetime.now())
     
-    use_cpu = 5
+    use_cpu = 20
     
     print(f"use cpu core {use_cpu}/{cpu_count()}")
 

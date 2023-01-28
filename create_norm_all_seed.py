@@ -20,8 +20,9 @@ e_30.append(D[0][0])
 
 e_33.append(beta.T @ omega)
 """
-# n_seed = 0
+
 alpha_lambda = 0.0
+
 alpha_wn0 = 100
 alpha_wn1 = 10
 
@@ -36,7 +37,7 @@ end = 100
 end_plt = 100
 start_plt = 0
 
-dir_base = "./data/bzd/"
+dir_base = "./data/no/"
 
 # t_data = np.loadtxt(dir_base + f"step{step}_t{end}.csv")
 
@@ -94,7 +95,7 @@ for i in tqdm(range(n)):
     # norm[i] = e_all_p[34]
     norm[i] = np.loadtxt(dir_base + f"s{i}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_s0}_{alpha_s1}_{alpha_s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")[34]
 
-norm_mean = np.mean(norm,axis=0)
+# norm_mean = np.mean(norm,axis=0)
 
 # e_mean = [e0_mean,e1_mean,e2_mean,e0_abs_mean,e1_abs_mean,e2_abs_mean,norm_mean]
 

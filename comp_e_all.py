@@ -18,8 +18,11 @@ e_30.append(D[0][0])
 
 e_33.append(beta.T @ omega)
 """
-n_seed = 30
-alpha_lambda = 0.0
+n_seed = 0
+
+alpha_lambda0 = 0.0
+alpha_lambda1 = 0.0
+
 alpha_wn0 = 100
 alpha_wn1 = 10
 
@@ -40,17 +43,17 @@ start_plt = 0
 
 dir_base = "./data/bzd/"
 
-t_data = np.loadtxt(dir_base + f"step{step}_t{end}.csv")
+t_data = np.loadtxt(dir_base + f"step{step}_t{end}.csv",delimiter = ",")
 
-e_all_p = np.loadtxt(dir_base + f"s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_0s0}_{alpha_0s1}_{alpha_0s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
-# e_all_c = np.loadtxt(dir_base + f"s{n_seed}_m{alpha_lambda}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_1s0}_{alpha_1s1}_{alpha_1s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
+e_all_p = np.loadtxt(dir_base + f"s{n_seed}_m{alpha_lambda0}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_0s0}_{alpha_0s1}_{alpha_0s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
+e_all_c = np.loadtxt(dir_base + f"s{n_seed}_m{alpha_lambda1}_wn{alpha_wn0}_{alpha_wn1}_s{alpha_1s0}_{alpha_1s1}_{alpha_1s2}_T{T}_step{step}_t{end}_e_all.csv",delimiter = ",")
 
 fig, axes = plt.subplots(nrows=11, ncols=3, sharex=False)
 
 for i in range(11):
     
     for j in range(3):
-        # axes[i,j].plot(t_data, e_all_c[3*i+j])
+        axes[i,j].plot(t_data, e_all_c[3*i+j])
         axes[i,j].plot(t_data, e_all_p[3*i+j])
         
         # axes[i,j].plot(t_data, e_all_c[3*i+j], color="tab:green", label = "Conventional")

@@ -5,7 +5,7 @@
 # no wn
 # no sign
 # beta zeta D stop
-
+# new s
 
 import numpy as np
 import time
@@ -158,13 +158,13 @@ def e_f(t, q):
     return e
 
 @njit(cache=True)
-def s_f(e):
+def s_f(e, alpha_sa1, alpha_sb1, alpha_sm1, alpha_sm2):
 
     s = np.zeros((3,1))
 
-    s = e[:,1:2] + ((5 * np.identity(3)) @ e[:,0:1])
+    # s = e[:,1:2] + ((5 * np.identity(3)) @ e[:,0:1])
     
-    # s = e[:,1:2] + ((6 * np.identity(3)) @ e[:,0:1])
+    s = e[:,1:2] + alpha_sa1 * np.abs(e[:,0:1])**((alpha_sm1 + 1)/2 + (alpha_sm1 - 1)/2 * np.sign(np.abs(e[:,0:1]) - 1.0)) * np.sign(e[:,0:1]) + alpha_sb1 * np.abs(e[:,0:1])**((alpha_sm2 + 1)/2 + (-alpha_sm2 + 1)/2 * np.sign(np.abs(e[:,0:1]) - 1.0)) * np.sign(e[:,0:1])
 
     return s
 
